@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0"  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- 
+  *********************************************************************************************
+  Contracts AfterBuild
+  *********************************************************************************************
+  1. generate SiLA Data transfer objects using the Contracts interface and SilaGen tool.
+  -->
+  <Target Name="ContractsAfterBuild" AfterTargets="AfterBuild" Condition="$(ProjectName) == 'Contracts'">
+
+    <PropertyGroup>
+      <!-- the nuget path of the package grpc.tools -->
+      <TecanSiLA2Version Condition="'%(PackageReference.Identity)' == 'tecan.sila2'">%(PackageReference.Version)</TecanSiLA2Version>
+      <TecanSiLA2SilaGenPath>$(NuGetPackageRoot)tecan.sila2\$(TecanSiLA2Version)\tools\SilaGen.exe</TecanSiLA2SilaGenPath>
+    </PropertyGroup>
+
+    <!-- create server side SiLA bindings -->
+    <Exec Command="$(TecanSiLA2SilaGenPath) generate-server $(TargetPath) ..\Server.NetCore\Server.NetCore.csproj -n SiLAGen.TestService" />
+
+    <!-- create client side SiLA bindings -->
+    <Exec Command="$(TecanSiLA2SilaGenPath) generate-client ..\Server.NetCore\TestService.sila.xml ..\Client\Client.csproj -n SiLAGen.Client" />
+  </Target>
+
+</Project>

@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Tecan.Sila2" Version="4.3.1-master.233" />
+    <PackageReference Include="Tecan.Sila2.Annotations" Version="4.3.1-master.233" />
+    <PackageReference Include="Tecan.Sila2.Contracts" Version="4.3.1-master.233" />
+  </ItemGroup>
+
+</Project>
